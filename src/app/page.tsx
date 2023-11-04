@@ -1,26 +1,14 @@
-// ./app/page.js
-'use client';
+import {sql} from "@vercel/postgres";
 
-import { useChat } from 'ai/react';
+export default async function Page() {
+    const { rows } = await sql`
+        INSERT INTO Tokens (Token, Translation, UserId) 
+        VALUES ('Hi', 'Hola', '1');`;
 
-export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
-
-  return (
+    console.log(rows);
+    return (
       <div>
-        {messages.map(m => (
-            <div key={m.id}>
-              {m.role}: {m.content}
-            </div>
-        ))}
-
-        <form onSubmit={handleSubmit}>
-          <input
-              value={input}
-              placeholder="Say something..."
-              onChange={handleInputChange}
-          />
-        </form>
+        Page
       </div>
   );
 }
